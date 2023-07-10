@@ -1,8 +1,9 @@
-import { FC, ReactElement } from "react";
-import { useSession } from "next-auth/react";
+import { ReactElement } from "react";
+import type { GetServerSideProps } from "next";
 import type { TokoPaediPage } from "~/pages/_app";
 import Head from "next/head";
 import AdminLayout from "~/components/dashboard/Layout";
+import { getServerAuthSession } from "~/server/auth";
 
 const Home: TokoPaediPage = ({}) => {
   return (
@@ -20,5 +21,22 @@ Home.getLayout = function getLayout(page: ReactElement) {
 };
 
 Home.authRequired = true;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getServerAuthSession(ctx);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/auth/signin",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+};
 
 export default Home;
