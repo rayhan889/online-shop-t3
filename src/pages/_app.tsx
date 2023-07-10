@@ -50,9 +50,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <link rel="icon" href="/favicon.ico" />
         </Head>
         {authRequired ? (
-          <AuthGuard>
-            <AdminLayout>{getLayout(<Component {...pageProps} />)}</AdminLayout>
-          </AuthGuard>
+          <AuthGuard>{getLayout(<Component {...pageProps} />)}</AuthGuard>
         ) : (
           getLayout(<Component {...pageProps} />)
         )}
