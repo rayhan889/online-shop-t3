@@ -8,7 +8,7 @@ export function AuthLayout({ children }: PropsWithChildren) {
         <div className="hidden sm:contents lg:relative lg:block lg:flex-1">
           <Image
             className="absolute inset-0 h-full w-full object-cover"
-            src="/backgroundImage.png"
+            src="/background2.jpg"
             fill
             alt="background_image"
             priority
