@@ -34,7 +34,7 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                 ></motion.div>
               </Dialog.Overlay>
               <Dialog.Content
-                className="fixed left-0 top-0 flex h-full w-full max-w-xs flex-col border-r border-l-slate-700 bg-white"
+                className="fixed left-0 top-0 flex h-full w-full max-w-xs flex-col border-r border-l-gray-500 bg-white"
                 forceMount
                 asChild
               >
@@ -59,16 +59,16 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                       </button>
                     </Dialog.Close>
                   </div>
-                  <nav className="mt-8 space-y-2">
+                  <nav className="mt-8 flex-1 space-y-2 bg-white p-4">
                     {entries.map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
                         className={cn(
                           item.current
-                            ? "bg-blue-200/50 text-blue-600 before:absolute before:left-0 before:h-full before:w-1 before:rounded-md before:bg-gradient-to-b before:from-blue-600 before:to-blue-200 before:content-['']"
+                            ? "bg-slate-200/60"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                          "group relative flex items-center px-7 py-3 text-base font-medium"
+                          "group relative flex items-center px-7 py-3 text-sm font-medium"
                         )}
                       >
                         <item.icon
@@ -76,7 +76,7 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                             item.current
                               ? "text-blue-600"
                               : "text-gray-400 group-hover:text-gray-500",
-                            "mr-4 h-6 w-6 flex-shrink-0"
+                            "mr-3 h-6 w-6 flex-shrink-0"
                           )}
                           aria-hidden="true"
                         />
@@ -94,7 +94,7 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
       {/* Static Sidebar for desktop */}
       <aside className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         {/* Sidebar component, swap this element with another Sidebar if you like */}
-        <div className="flex min-h-0 flex-1 flex-col border-r border-slate-200 bg-white">
+        <div className="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
           <div className="flex flex-1 flex-col overflow-y-auto pb-4 pt-5">
             <div className="flex flex-shrink-0 items-center px-7">
               <img
@@ -103,14 +103,14 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                 alt="Workflow"
               />
             </div>
-            <nav className="mt-8 flex-1 space-y-2 bg-white">
+            <nav className="mt-8 flex-1 space-y-2 bg-white p-4">
               {entries.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={cn(
                     item.current
-                      ? "bg-blue-200/50 text-blue-600 before:absolute before:left-0 before:h-full before:w-1 before:rounded-md before:bg-gradient-to-b before:from-blue-600 before:to-blue-200 before:content-['']"
+                      ? "bg-slate-200/60"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                     "group relative flex items-center px-7 py-3 text-sm font-medium"
                   )}

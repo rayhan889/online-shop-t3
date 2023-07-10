@@ -12,19 +12,19 @@ const AdminLayout = (props: PropsWithChildren) => {
 
   const [navLinks, setNavLinks] = useState([
     {
-      name: "Beranda",
+      name: "Home",
+      href: "/dashboard/home",
+      icon: Home,
+      current: true,
+    },
+    {
+      name: "Home",
       href: "/dashboard/home",
       icon: Home,
       current: false,
     },
     {
-      name: "Beranda",
-      href: "/dashboard/home",
-      icon: Home,
-      current: false,
-    },
-    {
-      name: "Beranda",
+      name: "Home",
       href: "/dashboard/home",
       icon: Home,
       current: false,
