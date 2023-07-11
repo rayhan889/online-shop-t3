@@ -55,3 +55,100 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+model Product {
+  id          String       @id @default(cuid())
+  name        String
+  price       Decimal
+  quantity    Int
+  image       String?
+  description String?
+  sku         String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  orderItems  OrderItem[]
+  carts       Cart[]
+  wishilists  Wishlist[]
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  cartId      String
+  wishlistId  String
+}
+
+model Customer {
+  id            String       @id @default(cuid())
+  firstName     String
+  lastName      String
+  email         String
+  image         String?
+  address       String?
+  phoneNumber   String?
+  orders        Order[]
+  cart          Cart?
+  wishlist      Wishlist?
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  date          DateTime
+  totalPrice    Decimal
+  customer      Customer  @relation(fields: [customerId], references: [id])
+  payment       Payment   @relation(fields: [paymentId], references: [id])
+  shipment      Shipment  @relation(fields: [shipmentId], references: [id])
+  orderItems    OrderItem[]
+  customerId    String
+  paymentId     String
+  shipmentId    String
+}
+
+model OrderItem {
+  id            String       @id @default(cuid())
+  quantity      Int
+  price         Decimal
+  order         Order        @relation(fields: [orderId], references: [id])
+  product       Product      @relation(fields: [productId], references: [id])
+  productId     String
+  orderId       String       @unique
+}
+
+model Payment {
+  id            String       @id @default(cuid())
+  date          DateTime
+  method        String
+  amount        Decimal
+  orders        Order[]
+}
+
+model Shipment {
+  id            String       @id @default(cuid())
+  date          DateTime
+  address       String
+  city          String
+  state         String
+  country       String
+  zipCode       String
+  orders        Order[]
+}
+
+model Category {
+  id            String       @id @default(cuid())
+  name          String
+  products      Product[]
+}
+
+model Cart {
+  id            String      @id @default(cuid())
+  quantity      Int
+  customer      Customer    @relation(fields: [customerId], references: [id])
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     String
+  customerId    String      @unique
+}
+
+model Wishlist {
+  id            String      @id @default(cuid())
+  customer      Customer    @relation(fields: [customerId], references: [id])
+  product       Product     @relation(fields: [productId], references: [id])
+  productId     String
+  customerId    String      @unique
+}
