@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { type PropsWithChildren, useEffect, useState } from "react";
-import { Home } from "lucide-react";
+import { Home, ShoppingBag } from "lucide-react";
 
 import Sidebar from "~/components/dashboard/Sidebar";
 import ContentArea from "~/components/dashboard/ContentArea";
@@ -18,9 +18,9 @@ const AdminLayout = (props: PropsWithChildren) => {
       current: true,
     },
     {
-      name: "Home",
-      href: "/dashboard/home",
-      icon: Home,
+      name: "Product",
+      href: "/dashboard/products",
+      icon: ShoppingBag,
       current: false,
     },
     {
