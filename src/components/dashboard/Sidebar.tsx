@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { ChevronsLeft, type LucideIcon } from "lucide-react";
@@ -60,13 +61,13 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                     </Dialog.Close>
                   </div>
                   <nav className="mt-8 flex-1 space-y-2 bg-white p-4">
-                    {entries.map((item) => (
+                    {entries.map((item, i) => (
                       <Link
-                        key={item.name}
+                        key={`${item.name}-${i}`}
                         href={item.href}
                         className={cn(
                           item.current
-                            ? "bg-slate-200/60"
+                            ? "bg-slate-200/60 text-blue-600"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                           "group relative flex items-center px-7 py-3 text-sm font-medium"
                         )}
@@ -80,7 +81,13 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                           )}
                           aria-hidden="true"
                         />
-                        {item.name}
+                        <span
+                          className={`${
+                            item.current ? "font-semibold" : "font-medium"
+                          }`}
+                        >
+                          {item.name}
+                        </span>
                       </Link>
                     ))}
                   </nav>
@@ -104,13 +111,13 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
               />
             </div>
             <nav className="mt-8 flex-1 space-y-2 bg-white p-4">
-              {entries.map((item) => (
+              {entries.map((item, i) => (
                 <Link
-                  key={item.name}
+                  key={`${item.name}-${i}`}
                   href={item.href}
                   className={cn(
                     item.current
-                      ? "bg-slate-200/60"
+                      ? "bg-slate-200/60 text-blue-600"
                       : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
                     "group relative flex items-center px-7 py-3 text-sm font-medium"
                   )}
@@ -124,7 +131,13 @@ export default function Sidebar({ entries, open, setOpen }: SidebarProps) {
                     )}
                     aria-hidden="true"
                   />
-                  {item.name}
+                  <span
+                    className={`${
+                      item.current ? "font-semibold" : "font-medium"
+                    }`}
+                  >
+                    {item.name}
+                  </span>
                 </Link>
               ))}
             </nav>
