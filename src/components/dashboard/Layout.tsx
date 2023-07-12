@@ -9,13 +9,14 @@ import Navbar from "~/components/dashboard/Navbar";
 
 const AdminLayout = (props: PropsWithChildren) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const { pathname } = useRouter();
 
   const [navLinks, setNavLinks] = useState([
     {
       name: "Home",
       href: "/dashboard/home",
       icon: Home,
-      current: true,
+      current: false,
     },
     {
       name: "Product",
@@ -23,13 +24,19 @@ const AdminLayout = (props: PropsWithChildren) => {
       icon: ShoppingBag,
       current: false,
     },
-    {
-      name: "Home",
-      href: "/dashboard/home",
-      icon: Home,
-      current: false,
-    },
   ]);
+
+  useEffect(() => {
+    setNavLinks((prevNavLinks) =>
+      prevNavLinks.map((nav) => {
+        if (pathname.includes(nav.href)) {
+          return { ...nav, current: true };
+        } else {
+          return { ...nav, current: false };
+        }
+      })
+    );
+  }, [pathname]);
 
   return (
     <>
