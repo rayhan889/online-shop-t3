@@ -4,6 +4,7 @@ import type { TokoPaediPage } from "~/pages/_app";
 import Head from "next/head";
 import AdminLayout from "~/components/dashboard/Layout";
 import { getServerAuthSession } from "~/server/auth";
+import ProductLists from "~/components/list/products/productLists";
 
 const Product: TokoPaediPage = ({}) => {
   return (
@@ -11,7 +12,7 @@ const Product: TokoPaediPage = ({}) => {
       <Head>
         <title>TokoPaedi | Products</title>
       </Head>
-      <div>Product</div>
+      <ProductLists />
     </>
   );
 };
