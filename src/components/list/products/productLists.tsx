@@ -1,6 +1,10 @@
 import type { FC } from "react";
 import { type Product, columns } from "./column";
 import { DataTable } from "./data-table";
+import { DebounceInput } from "~/components/input/debounceInput";
+import { useState } from "react";
+import { api } from "~/utils/api";
+import { Skeleton } from "~/components/ui/skeleton";
 
 interface ProductListsProps {
   isPaginated?: boolean;
@@ -28,9 +32,28 @@ export const Products: Product[] = [
 ];
 
 const ProductLists: FC<ProductListsProps> = ({}) => {
+  const { data, isLoading } = api.product.getAll.useQuery();
+  const [search, setSearch] = useState<string>("");
+
   return (
     <div className="container mx-auto py-10">
-      <DataTable columns={columns} data={Products} />
+      <div className="flex flex-col gap-4 rounded-sm bg-white p-4">
+        <DebounceInput
+          withIcon
+          value={search}
+          onChange={(value) => setSearch(String(value))}
+        />
+
+        {isLoading ? (
+          <div className="flex w-full flex-col gap-4">
+            <Skeleton className="h-10 w-full rounded-md" />
+            <Skeleton className="h-10 w-full rounded-md" />
+            <Skeleton className="h-10 w-full rounded-md" />
+          </div>
+        ) : (
+          <DataTable columns={columns} data={data} />
+        )}
+      </div>
     </div>
   );
 };
