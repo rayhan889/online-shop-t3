@@ -1,9 +1,9 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { createColumnHelper } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { RouterOutputs } from "~/utils/api";
 
 export type Product = {
   id: string;
@@ -15,9 +15,9 @@ export type Product = {
   sku: string;
 };
 
-const columnHelper = createColumnHelper<Product>();
+type ProductColumn = RouterOutputs["product"]["getAll"][number];
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "image",
     header: "Image",
