@@ -46,6 +46,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+    products      Product[]
 }
 
 model VerificationToken {
@@ -57,22 +58,25 @@ model VerificationToken {
 }
 
 model Product {
-  id          String       @id @default(cuid())
+  id          String      @id @default(cuid())
+  userId      String      
+  categoryId  String
   name        String
   price       Decimal
   quantity    Int
   image       String?
-  description String?
+  description String?   @db.VarChar(700)
   sku         String?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   orderItems  OrderItem[]
   carts       Cart[]
   wishilists  Wishlist[]
-  category    Category  @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  cartId      String
-  wishlistId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([categoryId])
 }
 
 model Customer {
@@ -90,25 +94,32 @@ model Customer {
 
 model Order {
   id            String    @id @default(cuid())
-  date          DateTime
-  totalPrice    Decimal
-  customer      Customer  @relation(fields: [customerId], references: [id])
-  payment       Payment   @relation(fields: [paymentId], references: [id])
-  shipment      Shipment  @relation(fields: [shipmentId], references: [id])
-  orderItems    OrderItem[]
   customerId    String
   paymentId     String
   shipmentId    String
+  date          DateTime
+  totalPrice    Decimal
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  payment       Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  shipment      Shipment  @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
+  orderItems    OrderItem[]
+
+  @@index([customerId])
+  @@index([paymentId])
+  @@index([shipmentId])
 }
 
 model OrderItem {
   id            String       @id @default(cuid())
-  quantity      Int
-  price         Decimal
-  order         Order        @relation(fields: [orderId], references: [id])
-  product       Product      @relation(fields: [productId], references: [id])
   productId     String
   orderId       String       @unique
+  quantity      Int
+  price         Decimal
+  order         Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product       Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([orderId])
 }
 
 model Payment {
@@ -138,17 +149,23 @@ model Category {
 
 model Cart {
   id            String      @id @default(cuid())
-  quantity      Int
-  customer      Customer    @relation(fields: [customerId], references: [id])
-  product       Product     @relation(fields: [productId], references: [id])
   productId     String
   customerId    String      @unique
+  quantity      Int
+  customer      Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([customerId])
 }
 
 model Wishlist {
   id            String      @id @default(cuid())
-  customer      Customer    @relation(fields: [customerId], references: [id])
-  product       Product     @relation(fields: [productId], references: [id])
   productId     String
   customerId    String      @unique
+  customer      Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product       Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([productId])
+  @@index([customerId])
 }
