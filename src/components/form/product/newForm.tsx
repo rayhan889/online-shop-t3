@@ -1,6 +1,6 @@
 "use client";
 
-import { SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -30,10 +30,9 @@ type NewProduct = RouterInputs["product"]["createNew"];
 export const redAsterisk = <span className="ml-1 text-red-600">*</span>;
 
 export function NewProductForm() {
-  const { data: productCategory, isLoading: productCategoryLoad } =
-    api.product.getAllCategory.useQuery();
+  const { data: productCategory } = api.product.getAllCategory.useQuery();
 
-  const { mutate, isLoading: isCreating } = api.product.createNew.useMutation();
+  const { mutate } = api.product.createNew.useMutation();
 
   const form = useForm<NewProduct>({
     defaultValues: {
