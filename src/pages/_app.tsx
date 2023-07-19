@@ -4,6 +4,7 @@ import { type AppProps, type AppType } from "next/app";
 import { api } from "~/utils/api";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 import "~/styles/globals.css";
 
@@ -49,6 +50,7 @@ const MyApp: AppType<{ session: Session | null }> = ({
           <meta name="description" content="🛒" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
+        <Toaster position="top-right" />
         {authRequired ? (
           <AuthGuard>{getLayout(<Component {...pageProps} />)}</AuthGuard>
         ) : (
